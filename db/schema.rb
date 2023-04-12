@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2023_04_12_024944) do
   enable_extension "plpgsql"
 
   create_table "cust_subs", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
     t.bigint "customer_id"
     t.bigint "subscription_id"
     t.index ["customer_id"], name: "index_cust_subs_on_customer_id"
@@ -34,7 +35,6 @@ ActiveRecord::Schema.define(version: 2023_04_12_024944) do
   create_table "subscriptions", force: :cascade do |t|
     t.string "title", null: false
     t.float "price", null: false
-    t.integer "status", null: false
     t.integer "frequency", null: false
     t.bigint "tea_id"
     t.datetime "created_at", null: false

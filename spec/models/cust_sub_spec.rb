@@ -10,6 +10,7 @@ RSpec.describe CustSub, type: :model do
 
   it { should belong_to(:customer) }
   it { should belong_to(:subscription) }
+  it { should validate_presence_of(:status) }
 
   it 'exists and has attributes' do
     expect(@customer.subscriptions[0]).to be_a(Subscription)
