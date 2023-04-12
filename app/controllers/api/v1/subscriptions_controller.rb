@@ -1,6 +1,6 @@
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :find_customer, only: [:create, :index]
-  before_action :find_subscription, only: [:create, :update]
+  before_action :find_subscription, only: [:create]
 
   def index
     render json: SubscriptionSerializer.subscriptions(@customer.subscriptions)
@@ -8,11 +8,6 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def create
     @customer.subscriptions << @subscription
-    render json: SubscriptionSerializer.subscription(@subscription)
-  end
-
-  def update
-    @subscription.update(status: params[:status])
     render json: SubscriptionSerializer.subscription(@subscription)
   end
 
