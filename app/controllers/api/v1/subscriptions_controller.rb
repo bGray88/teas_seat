@@ -1,12 +1,19 @@
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :find_customer, only: [:create, :index]
+  before_action :find_subscription, only: [:create, :update]
 
   def index
-    render json: @customer.subscriptions
+    render json: SubscriptionSerializer.subscriptions(@customer.subscriptions)
   end
 
   def create
-    @customer.subscriptions.create!(params[])
+    @customer.subscriptions << @subscription
+    render json: SubscriptionSerializer.subscription(@subscription)
+  end
+
+  def update
+    @subscription.update(status: params[:status])
+    render json: SubscriptionSerializer.subscription(@subscription)
   end
 
   private
@@ -16,6 +23,6 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def find_subscription
-    @subscription = Subscription.find_by(id: params[:sub_id])
+    @subscription = Subscription.find_by(id: params[:id])
   end
 end
