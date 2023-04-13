@@ -43,7 +43,7 @@ A tea subscription service that provides the ability to view a customer's subscr
   
   ### Production Links
   
-  * [Github](https://github.com/teas_seat) <br>
+  * [Github](https://github.com/bgray88/teas_seat) <br>
 
   ### Learning Goals
 
@@ -119,7 +119,7 @@ A tea subscription service that provides the ability to view a customer's subscr
   ### Articles
 
   <details>
-  <summary>Customer Subscriptions</summary><br>
+  <summary>Customer Subscriptions: Create</summary><br>
   
   ### Create
 
@@ -158,6 +158,9 @@ A tea subscription service that provides the ability to view a customer's subscr
   ```
 
   </details>
+
+  <details>
+  <summary>Customer Subscriptions: Index</summary><br>
 
   ### Index
 
@@ -206,7 +209,8 @@ A tea subscription service that provides the ability to view a customer's subscr
   </details>
 
 
-  </details>
+  <details>
+  <summary>Customer Subscriptions: Update</summary><br>
 
   ### Update
 
@@ -267,6 +271,7 @@ A tea subscription service that provides the ability to view a customer's subscr
   ### Project Managers-Instructors
 
   1. Juliet Eyraud
+  1. Leta Keane
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
