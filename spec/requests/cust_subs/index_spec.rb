@@ -34,7 +34,7 @@ RSpec.describe "CustSubs", type: :request do
       cust_subscription = cust_subscriptions[0]
 
       expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription1.frequency)
-      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription1.price)
+      expect(cust_subscription.dig(:attributes, :price)).to eq("$#{@subscription1.price}")
       expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription1.title)
     end
   end
