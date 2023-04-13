@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_many :cust_subs, dependent: :destroy
+  has_many :cust_subs
   has_many :subscriptions, through: :cust_subs
   has_many :teas, through: :subscriptions
 

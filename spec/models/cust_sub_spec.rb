@@ -13,6 +13,6 @@ RSpec.describe CustSub, type: :model do
   it { should validate_presence_of(:status) }
 
   it 'exists and has attributes' do
-    expect(@customer.subscriptions[0]).to be_a(Subscription)
+    expect(CustSub.last).to eq(CustSub.find_by(customer_id: @customer, subscription_id: @subscription))
   end
 end
