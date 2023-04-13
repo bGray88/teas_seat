@@ -4,21 +4,21 @@ class Api::V1::CustSubsController < ApplicationController
   before_action :find_subscription, only: [:create]
 
   def index
-    render json: SubscriptionSerializer.subscriptions(@customer.subscriptions)
+    subscriptions = SubscriptionFacade.subscriptions(@customer, @customer.subscriptions)
+    render json: SubscriptionSerializer.subscriptions(subscriptions)
   end
 
   def create
     @customer.subscriptions << @subscription
-    render json: SubscriptionSerializer.subscription(@subscription)
+    subscription = SubscriptionFacade.subscription(@customer, @subscription)
+    render json: SubscriptionSerializer.subscription(subscription)
   end
 
   def update
-    if @cust_sub
-      @cust_sub.update(status: params[:status])
-      render json: { message: "Subscription updated successfully" }
-    else
-      render json: { error: "Unable to update subscription" }
-    end
+    raise TeaError.new({ details: "Status given is invalid", status: 400 }) unless CustSub.valid_status(params[:status])
+
+    @cust_sub.update(status: params[:status])
+    render json: { message: "Subscription updated successfully" }
   end
 
   private
@@ -43,13 +43,16 @@ class Api::V1::CustSubsController < ApplicationController
 
   def find_customer
     @customer = Customer.find_by(id: customer_params[:customer_id])
+    raise TeaError.new({ details: "Customer not found" }) unless @customer
   end
 
   def find_subscription
     @subscription = Subscription.find_by(id: subscription_params[:subscription_id])
+    raise TeaError.new({ details: "Subscription not found" }) unless @subscription
   end
 
   def find_customer_subscription
     @cust_sub = CustSub.find_by(id: cust_sub_params[:id])
+    raise TeaError.new({ details: "Customer Subscription not found" }) unless @cust_sub
   end
 end

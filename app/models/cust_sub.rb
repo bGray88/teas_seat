@@ -8,4 +8,8 @@ class CustSub < ApplicationRecord
     active:    0,
     cancelled: 1
   }
+
+  def self.valid_status(status)
+    self.statuses.include?(status)
+  end
 end
