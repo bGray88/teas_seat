@@ -1,7 +1,7 @@
 # README
 ## Tea's Seat
 
-# TODO: Mission Statement
+A tea subscription service that provides the ability to view a customer's subscriptions, allow the assignment of new subscriptions to a customer, and gives the chance to set currently assigned subscriptions as cancelled.
 
 <a name="readme-top"></a>
 
@@ -44,7 +44,6 @@
   ### Production Links
   
   * [Github](https://github.com/teas_seat) <br>
-  * [Try Out the App]()<br>
 
   ### Learning Goals
 
@@ -62,18 +61,19 @@
     <summary>Done</summary>
     - [x] Add Readme<br>
     - [x] Setup Repo and Push to Github<br>
+    - [x] Readme: Outlines the learning goals<br>
+    - [x] Readme: Clone and Setup<br>
+    - [x] Readme: Happy Path Endpoint Use<br>
+    - [x] Endpoints: Customers<br>
+    - [x] Endpoints: Subscription<br>
+    - [x] Endpoints: Teas<br>
+    - [x] Testing: Customers<br>
+    - [x] Testing: Subscription<br>
+    - [x] Testing: Teas<br>
   </details>
   <details>
     <summary>In Progress</summary>
-    - [] Readme: Outlines the learning goals<br>
-    - [] Readme: Clone and Setup<br>
-    - [] Readme: Happy Path Endpoint Use<br>
-    - [] Endpoints: Customers<br>
-    - [] Endpoints: Subscription<br>
-    - [] Endpoints: Teas<br>
-    - [] Testing: Customers<br>
-    - [] Testing: Subscription<br>
-    - [] Testing: Teas<br>
+    - [] Testing: Expanded Sad Path<br>
   </details>
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -119,37 +119,121 @@
   ### Articles
 
   <details>
-  <summary>All Articles</summary><br>
+  <summary>Customer Subscriptions</summary><br>
   
-  ### All Articles: Query
+  ### Create
+
+  Example Request:
+
   ```js
-  query allArticles ($limit: Int) {
-    allArticles (limit: $limit) {
-      id
-      name
-      status
-      imageLink
-      altImage
-      articleType
-      ageGroup
-      color
-      gender
-      condition
-      description
-      price
-      user {
-          id
-          name
-          __typename
-      }
-      __typename
-    }
+  POST /api/v1/cust_sub
+
+  {
+    "customer": 
+        {
+            "customer_id": 2340
+        },
+    "subscription":
+        {
+            "subscription_id": 2850
+        }
   }
   ```
 
   Example Response:
 
-  ![alt text](app/assets/images/readme//users/readme-find_user-response.png)
+  ```js
+  {
+    "data": {
+        "type": "subscription",
+        "id": 2851,
+        "attributes": {
+            "title": "Standard",
+            "price": 22.8,
+            "status": "active",
+            "frequency": "biannual"
+        }
+    }
+  }
+  ```
+
+  </details>
+
+  ### Index
+
+  Example Request:
+
+  ```js
+  GET /api/v1/cust_subs
+
+  {
+    "customer": 
+        {
+            "customer_id": 2340
+        }
+  }
+  ```
+
+  Example Response:
+
+  ```js
+  {
+    "data": [
+        {
+            "type": "subscription",
+            "id": 2842,
+            "attributes": {
+                "title": "Bronze",
+                "price": 39.8,
+                "status": "active",
+                "frequency": "annual"
+            }
+        },
+        {
+            "type": "subscription",
+            "id": 2843,
+            "attributes": {
+                "title": "Basic",
+                "price": 47.75,
+                "status": "active",
+                "frequency": "annual"
+            }
+        }
+    ]
+  }
+  ```
+
+  </details>
+
+
+  </details>
+
+  ### Update
+
+  Example Request:
+
+  **Available Statuses: 'active', 'cancelled'**
+
+  ```js
+  PATCH /api/v1/cust_sub
+
+  {
+    "cust_sub":
+        {
+            "id": 1445
+        },
+    "status": "cancelled"
+  }
+  ```
+
+  Example Response:
+
+  ```js
+  {
+    "message": "Subscription updated successfully"
+  }
+  ```
+
   </details>
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>

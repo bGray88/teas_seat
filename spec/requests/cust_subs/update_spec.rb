@@ -65,11 +65,11 @@ RSpec.describe "CustSubs", type: :request do
       }
 
       patch api_v1_cust_sub_path(payload), headers: @headers
-      expect(response).to be_successful
+      expect(response).to_not be_successful
 
       update_response = JSON.parse(response.body, symbolize_names: true)
 
-      expect(update_response[:error]).to eq("Unable to update subscription")
+      expect(update_response.dig(:errors, 0, :details)).to eq("Customer Subscription not found")
     end
   end
 end
