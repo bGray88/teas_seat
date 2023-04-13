@@ -23,7 +23,7 @@ RSpec.describe "CustSubs", type: :request do
   describe "GET /index" do
     it 'can get customer subscriptions' do
       payload = { customer: { customer_id: @customer1.id } }
-      get api_v1_cust_subs_path(@customer), headers: @headers, params: payload
+      get api_v1_cust_subs_path, headers: @headers, params: payload
       expect(response).to be_successful
 
       cust_subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
@@ -42,7 +42,6 @@ RSpec.describe "CustSubs", type: :request do
   describe "POST /create" do
     it 'can assign user a subscription' do
       payload = {
-        customer_id: @customer1.id,
         customer: { customer_id: @customer1.id },
         subscription: { subscription_id: @subscription3.id }
       }
@@ -61,9 +60,8 @@ RSpec.describe "CustSubs", type: :request do
   describe "PATCH /update" do
     it 'can change the status of a subscription' do
       cust_sub = CustSub.create(customer_id: @customer1.id, subscription_id: @subscription3.id)
+
       payload = {
-        id: cust_sub.id,
-        customer_id: @customer1.id,
         cust_sub: { id: cust_sub.id },
         status: "cancelled"
       }
@@ -82,8 +80,6 @@ RSpec.describe "CustSubs", type: :request do
       cust_sub2 = CustSub.create(customer_id: @customer2.id, subscription_id: @subscription3.id)
 
       payload = {
-        id: cust_sub1.id,
-        customer_id: @customer1.id,
         cust_sub: { id: cust_sub1.id },
         status: "cancelled"
       }
@@ -100,10 +96,7 @@ RSpec.describe "CustSubs", type: :request do
     end
 
     it 'will return error message if unable to update due to invalid data' do
-      cust_sub1 = CustSub.create(customer_id: @customer1.id, subscription_id: @subscription3.id)
       payload = {
-        id: cust_sub1.id,
-        customer_id: @customer1.id,
         cust_sub: { id: 55 },
         status: "cancelled"
       }
