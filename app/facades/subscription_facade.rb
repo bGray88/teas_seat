@@ -4,10 +4,10 @@ class SubscriptionFacade
     {
       id: subscription.id,
       title: subscription.title,
-      price: subscription.price,
+      price: subscription.price.to_s(:currency),
       frequency: subscription.frequency,
       status: cust_sub.status,
-      tea_id: subscription.tea_id,
+      tea: subscription.tea,
       created_at: subscription.created_at,
       updated_at: subscription.updated_at
     }
@@ -19,10 +19,10 @@ class SubscriptionFacade
       {
         id: subscription.id,
         title: subscription.title,
-        price: subscription.price,
+        price: subscription.price.to_s(:currency),
         frequency: subscription.frequency,
         status: cust_sub.status,
-        tea_id: subscription.tea_id,
+        tea: subscription.tea,
         created_at: subscription.created_at,
         updated_at: subscription.updated_at
       }

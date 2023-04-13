@@ -5,4 +5,9 @@ class Tea < ApplicationRecord
   validates :description, presence: true
   validates :temperature, presence: true
   validates :brew_time, presence: true
+
+  enum temperature: {
+    hot: 0,
+    cold: 1
+  }
 end
