@@ -1,9 +1,11 @@
-class SubscriptionPoro
+class CustSubPoro
   attr_reader :id,
-              :title,
-              :price,
-              :frequency,
               :status,
+              :customer_id,
+              :sub_id,
+              :sub_title,
+              :sub_price,
+              :sub_frequency,
               :tea_id,
               :tea_title,
               :tea_description,
@@ -12,10 +14,12 @@ class SubscriptionPoro
 
   def initialize(data)
     @id              = data[:id]
-    @title           = data[:title]
-    @price           = data[:price]
-    @frequency       = data[:frequency]
     @status          = data[:status]
+    @customer_id     = data[:customer_id]
+    @sub_id          = data[:sub_id]
+    @sub_title       = data[:sub_title]
+    @sub_price       = data[:sub_price]
+    @sub_frequency   = data[:sub_frequency]
     @tea_id          = data[:tea_id]
     @tea_title       = data[:tea_title]
     @tea_description = data[:tea_description]

@@ -16,12 +16,12 @@ class SubscriptionSerializer
   def self.sub_properties(subscription)
     {
       "type":       "subscription",
-      "id":         subscription.id,
+      "id":         subscription.sub_id,
       "attributes": {
-        "title":     subscription.title,
-        "price":     subscription.price,
+        "title":     subscription.sub_title,
+        "price":     subscription.sub_price,
         "status":    subscription.status,
-        "frequency": subscription.frequency,
+        "frequency": subscription.sub_frequency,
         "tea": {
           "type":      "tea",
           "id":        subscription.tea_id,
