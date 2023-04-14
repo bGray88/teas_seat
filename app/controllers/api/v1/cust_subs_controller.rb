@@ -15,7 +15,7 @@ class Api::V1::CustSubsController < ApplicationController
   end
 
   def update
-    raise TeaError.new({ details: "Status given is invalid", status: 400 }) unless CustSub.valid_status(params[:status])
+    raise TeaError.new({ details: "Status given is invalid" }) unless CustSub.valid_status(params[:status])
 
     @cust_sub.update(status: params[:status])
     render json: { message: "Subscription updated successfully" }
@@ -43,16 +43,16 @@ class Api::V1::CustSubsController < ApplicationController
 
   def find_customer
     @customer = Customer.find_by(id: customer_params[:customer_id])
-    raise TeaError.new({ details: "Customer not found" }) unless @customer
+    raise TeaError.new({ details: "Customer not found", status: 404 }) unless @customer
   end
 
   def find_subscription
     @subscription = Subscription.find_by(id: subscription_params[:subscription_id])
-    raise TeaError.new({ details: "Subscription not found" }) unless @subscription
+    raise TeaError.new({ details: "Subscription not found", status: 404 }) unless @subscription
   end
 
   def find_customer_subscription
     @cust_sub = CustSub.find_by(id: cust_sub_params[:id])
-    raise TeaError.new({ details: "Customer Subscription not found" }) unless @cust_sub
+    raise TeaError.new({ details: "Customer Subscription not found", status: 404 }) unless @cust_sub
   end
 end
