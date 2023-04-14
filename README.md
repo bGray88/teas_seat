@@ -54,11 +54,12 @@ A tea subscription service that provides the ability to view a customer's subscr
   ### Built With
 
   [![Ruby]][Ruby-url] [![Rails]][Rails-url][![Postgres]][Postgres-url]
-  [![Postman]][Postman-url][![CircleCI]][CircleCI-url]
+  [![Postman]][Postman-url]
 
   ### Roadmap
   <details>
     <summary>Done</summary>
+    - [x] Design Schema<br>
     - [x] Add Readme<br>
     - [x] Setup Repo and Push to Github<br>
     - [x] Readme: Outlines the learning goals<br>
@@ -70,10 +71,10 @@ A tea subscription service that provides the ability to view a customer's subscr
     - [x] Testing: Customers<br>
     - [x] Testing: Subscription<br>
     - [x] Testing: Teas<br>
+    - [x] Testing: Expanded Sad Path<br>
   </details>
   <details>
     <summary>In Progress</summary>
-    - [] Testing: Expanded Sad Path<br>
   </details>
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -115,8 +116,6 @@ A tea subscription service that provides the ability to view a customer's subscr
   ![alt text](app/assets/images/readme/read_me-schema.png)
 
   ### Endpoints
-  
-  ### Articles
 
   <details>
   <summary>Customer Subscriptions: Create</summary><br>
@@ -129,14 +128,12 @@ A tea subscription service that provides the ability to view a customer's subscr
   POST /api/v1/cust_sub
 
   {
-    "customer": 
-        {
-            "customer_id": 2340
-        },
-    "subscription":
-        {
-            "subscription_id": 2850
-        }
+    "customer": {
+      "customer_id": 1
+    },
+    "subscription": {
+      "subscription_id": 2
+    }
   }
   ```
 
@@ -145,14 +142,24 @@ A tea subscription service that provides the ability to view a customer's subscr
   ```js
   {
     "data": {
-        "type": "subscription",
-        "id": 2851,
-        "attributes": {
-            "title": "Standard",
-            "price": 22.8,
-            "status": "active",
-            "frequency": "biannual"
+      "type": "subscription",
+      "id": 2,
+      "attributes": {
+        "title": "Silver",
+        "price": "$82.10",
+        "status": "active",
+        "frequency": "biannual",
+        "tea": {
+          "type": "tea",
+          "id": 8,
+          "attributes": {
+              "title": "Osmanthus",
+              "description": "You may drink it",
+              "temperature": "cold",
+              "brew_time": 8
+          }
         }
+      }
     }
   }
   ```
@@ -170,10 +177,9 @@ A tea subscription service that provides the ability to view a customer's subscr
   GET /api/v1/cust_subs
 
   {
-    "customer": 
-        {
-            "customer_id": 2340
-        }
+    "customer": {
+      "customer_id": 1
+    }
   }
   ```
 
@@ -182,26 +188,46 @@ A tea subscription service that provides the ability to view a customer's subscr
   ```js
   {
     "data": [
-        {
-            "type": "subscription",
-            "id": 2842,
+      {
+        "type": "subscription",
+        "id": 7,
+        "attributes": {
+          "title": "Premium",
+          "price": "$37.53",
+          "status": "active",
+          "frequency": "biannual",
+          "tea": {
+            "type": "tea",
+            "id": 2,
             "attributes": {
-                "title": "Bronze",
-                "price": 39.8,
-                "status": "active",
-                "frequency": "annual"
+              "title": "Kukicha",
+              "description": "You may drink it",
+              "temperature": "hot",
+              "brew_time": 10
             }
-        },
-        {
-            "type": "subscription",
-            "id": 2843,
-            "attributes": {
-                "title": "Basic",
-                "price": 47.75,
-                "status": "active",
-                "frequency": "annual"
-            }
+          }
         }
+      },
+      {
+        "type": "subscription",
+        "id": 2,
+        "attributes": {
+          "title": "Basic",
+          "price": "$80.83",
+          "status": "cancelled",
+          "frequency": "monthly",
+          "tea": {
+            "type": "tea",
+            "id": 9,
+            "attributes": {
+              "title": "Gongmei",
+              "description": "You may drink it",
+              "temperature": "cold",
+              "brew_time": 6
+            }
+          }
+        }
+      }
     ]
   }
   ```
@@ -222,10 +248,9 @@ A tea subscription service that provides the ability to view a customer's subscr
   PATCH /api/v1/cust_sub
 
   {
-    "cust_sub":
-        {
-            "id": 1445
-        },
+    "cust_sub": {
+      "id": 3
+    },
     "status": "cancelled"
   }
   ```
@@ -283,5 +308,3 @@ A tea subscription service that provides the ability to view a customer's subscr
   [Postgres-url]: https://www.postgresql.org/
   [Postman]: https://img.shields.io/badge/-Postman-FF6C37?style=flat&logo=postman&logoColor=white
   [Postman-url]: https://www.postman.com/
-  [CircleCI]: https://img.shields.io/badge/circle%20ci-%23161616.svg?style=flat&logo=circleci&logoColor=white
-  [CircleCI-url]: https://circleci.com/
