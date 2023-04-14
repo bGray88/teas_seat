@@ -3,6 +3,7 @@ class CustSub < ApplicationRecord
   belongs_to :subscription
 
   validates :status, presence: true
+  validates :customer_id, uniqueness: { scope: :subscription_id, message: "already subscribes to this tea" }
 
   enum status: {
     active:    0,
