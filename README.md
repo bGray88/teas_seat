@@ -125,7 +125,7 @@ A tea subscription service that provides the ability to view a customer's subscr
   Example Request:
 
   ```js
-  POST /api/v1/cust_sub
+  POST /api/v1/cust_subs
 
   {
     "customer": {
@@ -142,21 +142,30 @@ A tea subscription service that provides the ability to view a customer's subscr
   ```js
   {
     "data": {
-      "type": "subscription",
-      "id": 2,
+      "type": "cust_sub",
+      "id": 915,
       "attributes": {
-        "title": "Silver",
-        "price": "$82.10",
         "status": "active",
-        "frequency": "biannual",
-        "tea": {
-          "type": "tea",
-          "id": 8,
+        "customer_id": 1,
+        "subscription_id": 10,
+        "subscription": {
+          "type": "subscription",
+          "id": 10,
           "attributes": {
-              "title": "Osmanthus",
-              "description": "You may drink it",
-              "temperature": "cold",
-              "brew_time": 8
+            "title": "Essential",
+            "price": "$87.26",
+            "status": "active",
+            "frequency": "annual",
+            "tea": {
+              "type": "tea",
+              "id": 10,
+              "attributes": {
+                "title": "Huangshan Maofeng",
+                "description": "You may drink it",
+                "temperature": "cold",
+                "brew_time": 7
+              }
+            }
           }
         }
       }
@@ -166,6 +175,44 @@ A tea subscription service that provides the ability to view a customer's subscr
 
   </details>
 
+  <details>
+  <summary>Customer Subscriptions: Show</summary><br>
+
+  ### Show
+
+  Example Request:
+
+  ```js
+  GET /api/v1/cust_sub
+
+  {
+    "customer": {
+      "customer_id": 1
+    },
+    "subscription": {
+      "subscription_id": 2
+    }
+  }
+  ```
+
+  Example Response:
+
+  ```js
+  {
+    "data": {
+      "type": "cust_sub",
+      "id": 1,
+      "attributes": {
+        "status": "active",
+        "customer_id": 1,
+        "subscription_id": 1
+      }
+    }
+  }
+  ```
+
+  </details>
+  
   <details>
   <summary>Customer Subscriptions: Index</summary><br>
 
@@ -233,7 +280,6 @@ A tea subscription service that provides the ability to view a customer's subscr
   ```
 
   </details>
-
 
   <details>
   <summary>Customer Subscriptions: Update</summary><br>
