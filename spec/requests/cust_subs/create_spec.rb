@@ -55,5 +55,19 @@ RSpec.describe "CustSubs", type: :request do
 
       expect(update_response.dig(:errors, 0, :details)).to eq("Customer not found")
     end
+
+    it 'will return error message if unable to create due to existing subscription' do
+      payload = {
+        customer: { customer_id: @customer1.id },
+        subscription: { subscription_id: @subscription1.id }
+      }
+
+      post api_v1_cust_subs_path(payload), headers: @headers
+      expect(response).to_not be_successful
+
+      update_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(update_response.dig(:errors, 0, :details)).to eq("Validation failed: Customer already subscribes to this tea")
+    end
   end
 end
