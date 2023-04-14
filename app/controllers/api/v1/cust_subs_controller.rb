@@ -4,20 +4,21 @@ class Api::V1::CustSubsController < ApplicationController
   before_action :find_subscription, only: [:show, :create]
 
   def index
-    subscriptions = SubscriptionFacade.subscriptions(@customer, @customer.subscriptions)
+    subscriptions = CustSubFacade.cust_sub_and_subscriptions(@customer, @customer.subscriptions)
     render json: SubscriptionSerializer.subscriptions(subscriptions)
   end
 
   def show
     cust_sub = CustSub.find_by(customer_id: @customer.id, subscription_id: @subscription.id)
     raise TeaError.new({ details: "Customer Subscription not found", status: 404 }) unless cust_sub
+
     render json: CustSubSerializer.cust_sub(cust_sub)
   end
 
   def create
-    @customer.subscriptions << @subscription
-    subscription = SubscriptionFacade.subscription(@customer, @subscription)
-    render json: SubscriptionSerializer.subscription(subscription)
+    cust_sub = CustSub.create!(customer_id: @customer.id, subscription_id: @subscription.id)
+    subscription = CustSubFacade.cust_sub_and_subscription(@customer, @subscription)
+    render json: CustSubSerializer.cust_sub_and_subscription(cust_sub, subscription)
   end
 
   def update
