@@ -32,14 +32,16 @@ RSpec.describe "CustSubs", type: :request do
       cust_subscription = JSON.parse(response.body, symbolize_names: true)[:data]
 
       expect(cust_subscription).to be_a(Hash)
-      expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription3.frequency)
-      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription3.price.to_s(:currency))
-      expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription3.title)
       expect(cust_subscription.dig(:attributes, :status)).to eq("active")
-      expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription3.frequency)
-      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription3.price.to_s(:currency))
-      expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription3.title)
-      expect(cust_subscription.dig(:attributes, :status)).to eq("active")
+      expect(cust_subscription.dig(:attributes, :customer_id)).to eq(@customer1.id)
+      expect(cust_subscription.dig(:attributes, :subscription_id)).to eq(@subscription3.id)
+      expect(cust_subscription.dig(:attributes, :subscription, :id)).to eq(@subscription3.id)
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :title)).to eq(@subscription3.title)
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :price)).to eq(@subscription3.price.to_s(:currency))
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :frequency)).to eq(@subscription3.frequency)
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :tea, :attributes, :title)).to eq(@subscription3.tea.title)
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :tea, :attributes, :description)).to eq(@subscription3.tea.description)
+      expect(cust_subscription.dig(:attributes, :subscription, :attributes, :tea, :attributes, :brew_time)).to eq(@subscription3.tea.brew_time)
     end
 
     it 'will return error message if unable to create due to invalid data' do
