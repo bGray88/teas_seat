@@ -33,8 +33,27 @@ RSpec.describe "CustSubs", type: :request do
 
       expect(cust_subscription).to be_a(Hash)
       expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription3.frequency)
-      expect(cust_subscription.dig(:attributes, :price)).to eq("$#{@subscription3.price}")
+      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription3.price.to_s(:currency))
       expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription3.title)
+      expect(cust_subscription.dig(:attributes, :status)).to eq("active")
+      expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription3.frequency)
+      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription3.price.to_s(:currency))
+      expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription3.title)
+      expect(cust_subscription.dig(:attributes, :status)).to eq("active")
+    end
+
+    it 'will return error message if unable to create due to invalid data' do
+      payload = {
+        customer: { customer_id: "apple" },
+        subscription: { subscription_id: "banana" }
+      }
+
+      post api_v1_cust_subs_path(payload), headers: @headers
+      expect(response).to_not be_successful
+
+      update_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(update_response.dig(:errors, 0, :details)).to eq("Customer not found")
     end
   end
 end

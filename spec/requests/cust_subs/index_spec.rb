@@ -34,8 +34,19 @@ RSpec.describe "CustSubs", type: :request do
       cust_subscription = cust_subscriptions[0]
 
       expect(cust_subscription.dig(:attributes, :frequency)).to eq(@subscription1.frequency)
-      expect(cust_subscription.dig(:attributes, :price)).to eq("$#{@subscription1.price}")
+      expect(cust_subscription.dig(:attributes, :price)).to eq(@subscription1.price.to_s(:currency))
       expect(cust_subscription.dig(:attributes, :title)).to eq(@subscription1.title)
+    end
+
+    it 'will return empty array if subscriptions none' do
+      payload = { customer: { customer_id: @customer2.id } }
+      get api_v1_cust_subs_path, headers: @headers, params: payload
+      expect(response).to be_successful
+
+      cust_subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+
+      expect(cust_subscriptions).to be_a(Array)
+      expect(cust_subscriptions.empty?).to be(true)
     end
   end
 end
