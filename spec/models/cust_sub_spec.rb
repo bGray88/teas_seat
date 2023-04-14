@@ -15,4 +15,18 @@ RSpec.describe CustSub, type: :model do
   it 'exists and has attributes' do
     expect(CustSub.last).to eq(CustSub.find_by(customer_id: @customer, subscription_id: @subscription))
   end
+
+  describe 'instance methods' do
+    describe 'valid_status' do
+      it 'checks value for valid status' do
+        valid1  = "active"
+        valid2  = "cancelled"
+        invalid = "unicorn"
+
+        expect(CustSub.valid_status(valid1)).to be(true)
+        expect(CustSub.valid_status(valid2)).to be(true)
+        expect(CustSub.valid_status(invalid)).to be(false)
+      end
+    end
+  end
 end
